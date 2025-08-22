@@ -35,23 +35,17 @@
         email: document.getElementById("email").value
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbyFs3QIRaQNyUgbqx-KHbtZYWP31IrPTN4JfXx-uYJcqUk-J7sRhTim9g7uV_crkgC1/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbz_xNzNSdwdXVq5FItRN6iToE_XIupbsQBpoiAEzHkbCED4sX_nL0NtO9ini_5IfeYA/exec", {
         method: "POST",
-        mode: "cors",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"
         }
       })
       .then(res => res.text())
-      .then(text => {
-        try {
-          let json = JSON.parse(text);
-          document.getElementById("responseMessage").innerText = "✅ Data berhasil dikirim!";
-          document.getElementById("laundryForm").reset();
-        } catch (e) {
-          document.getElementById("responseMessage").innerText = "⚠️ Respon tidak sesuai JSON: " + text;
-        }
+      .then(res => {
+        document.getElementById("responseMessage").innerText = "✅ " + res;
+        document.getElementById("laundryForm").reset();
       })
       .catch(err => {
         document.getElementById("responseMessage").innerText = "❌ Gagal: " + err;

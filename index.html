@@ -3,50 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laundry Bersih & Cepat</title>
+  <title>LaundryKu - Form Pelanggan</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9fbfd; color: #222; }
-    header { background: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    header h1 { margin: 0; font-size: 26px; color: #1d3557; }
-    section.hero { display: flex; justify-content: center; padding: 40px; }
-    form { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 300px; display: flex; flex-direction: column; gap: 10px; }
-    input { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-    button { background: #2ecc71; border: none; padding: 14px; font-size: 16px; color: #fff; border-radius: 6px; cursor: pointer; font-weight: bold; }
-    button:hover { background: #27ae60; }
+    body { font-family: Arial, sans-serif; margin: 30px; background: #f8f8f8; }
+    .container { max-width: 400px; margin: auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+    h2 { text-align: center; }
+    input, button { width: 100%; padding: 10px; margin: 5px 0; }
+    button { background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Laundry Bersih, Cepat & Terpercaya</h1>
-  </header>
-
-  <section class="hero">
+  <div class="container">
+    <h2>Daftar Pelanggan Laundry</h2>
     <form id="laundryForm">
-      <input type="text" id="nama" placeholder="Nama" required>
-      <input type="text" id="hp" placeholder="No. HP / WhatsApp" required>
+      <input type="text" id="name" placeholder="Nama" required>
+      <input type="text" id="phone" placeholder="Nomor HP" required>
       <input type="email" id="email" placeholder="Email" required>
-      <button type="submit">Daftar Sekarang</button>
+      <button type="submit">Kirim</button>
     </form>
-  </section>
+    <p id="responseMessage"></p>
+  </div>
 
   <script>
-    document.getElementById("laundryForm").addEventListener("submit", function(e){
+    document.getElementById("laundryForm").addEventListener("submit", function(e) {
       e.preventDefault();
+
+      let data = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value
+      };
 
       fetch("https://script.google.com/macros/s/AKfycbyc2TmP4wU7NbTHLakZI0J7kpp1mDriB3Jexp4r5qaAv48S-qHEuzkPy-VMsrzg5Bu8/exec", {
         method: "POST",
-        body: JSON.stringify({
-          nama: document.getElementById("nama").value,
-          hp: document.getElementById("hp").value,
-          email: document.getElementById("email").value
-        }),
-        headers: { "Content-Type": "application/json" }
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
       })
-      .then(res => alert("✅ Data berhasil dikirim!"))
-      .catch(err => alert("❌ Gagal: " + err));
+      .then(res => res.json())
+      .then(res => {
+        document.getElementById("responseMessage").innerText = "✅ Data berhasil dikirim!";
+        document.getElementById("laundryForm").reset();
+      })
+      .catch(err => {
+        document.getElementById("responseMessage").innerText = "❌ Gagal: " + err;
+      });
     });
   </script>
-
 </body>
 </html>

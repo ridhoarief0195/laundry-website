@@ -34,7 +34,7 @@
     document.getElementById("laundryForm").addEventListener("submit", function(e){
       e.preventDefault();
 
-      fetch("PASTE_URL_GOOGLE_SCRIPT_DI_SINI", {
+      fetch("https://script.google.com/macros/s/AKfycby2t6eilKqKe11qqcuEc0IFvzDgzAHadIofyyA0vhdaj32up4jjE8fXZfV_XF13SRo/exec", {
         method: "POST",
         body: JSON.stringify({
           nama: document.getElementById("nama").value,
